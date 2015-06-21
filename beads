@@ -1,0 +1,57 @@
+/*
+ ID: menna.k2
+ PROG: beads
+ LANG: C++
+ */
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+
+int main() {
+	//for testing
+//	freopen("input/beads.in", "r", stdin);
+	//for submitting
+	freopen("beads.in", "r", stdin);
+	freopen("beads.out", "w", stdout);
+	string str;
+	int len;
+	cin >> len >> str;
+	//a var to keep track of current char
+	char currentChar;
+	int bstCnt = 0;
+	//trying to cut beads from every i
+	for (int i = 0; i < len; i++) {
+		bool *bitVis=new bool[len]();
+		int j = i;
+		int currCnt = 0;
+		currentChar = 'N';
+		while (!bitVis[j]) {
+			if (currentChar != 'N' && str[j] != 'w' && str[j] != currentChar)
+				break;
+			if (currentChar == 'N' && str[j] != 'w')
+				currentChar = str[j];
+			bitVis[j]=true;
+			currCnt++;
+			j = (j + 1) % len;
+		}
+
+		j = ((i - 1) + len) % len;
+		currentChar = 'N';
+		while (!bitVis[j]) {
+			if (currentChar != 'N' && str[j] != 'w' && str[j] != currentChar)
+				break;
+			if (currentChar == 'N' && str[j] != 'w')
+				currentChar = str[j];
+			bitVis[j]=true;
+			currCnt++;
+			j = ((j - 1) + len) % len;
+		}
+		if (bstCnt < currCnt)
+			bstCnt = currCnt;
+
+		delete[] bitVis;
+	}
+	cout << bstCnt << endl;
+	return 0;
+}
