@@ -1,0 +1,59 @@
+/*
+ ID: menna.k2
+ PROG: friday
+ LANG: C++
+ */
+
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+
+int getDays(int monthNum, bool isLeap) {
+	if (monthNum == 9 || monthNum == 11 || monthNum == 4 || monthNum == 6)
+		return 30;
+	if (monthNum == 2) {
+		if (!isLeap)
+			return 28;
+		else
+			return 29;
+	}
+	return 31;
+}
+int main() {
+	//for testing
+//	freopen("input/friday.in", "r", stdin);
+	//for submitting
+	freopen("friday.in", "r", stdin);
+	freopen("friday.out", "w", stdout);
+	int week[7] = { 0 };
+	int startMday = 2;
+	int year = 1900;
+	int numOfDays = 0;
+	int N;
+	cin >> N;
+	for (int i = year; i < year + N; i++) {
+		bool isLeapYear = false;
+		if (i % 4 == 0) {
+			if ((i % 100 == 0 && i % 400 == 0) || i % 100 != 0)
+				isLeapYear = true;
+		}
+
+		for (int j = 1; j <= 12; j++) {
+			numOfDays = getDays(j, isLeapYear);
+
+			int thDay = (startMday - 1 + 13) % 7;
+			week[thDay]++;
+			startMday = (startMday + numOfDays) % 7;
+
+		}
+	}
+	for (int i = 0; i < 7; i++) {
+
+		cout << week[i];
+		if (i != 6)
+			cout << " ";
+	}
+	cout << endl;
+	return 0;
+}
