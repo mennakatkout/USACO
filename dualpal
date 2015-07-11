@@ -1,0 +1,83 @@
+/*
+ ID: menna.k2
+ PROG: dualpal
+ LANG: C++
+ */
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+
+string convertToBaseB(int num, int b) {
+	string conc = "";
+	while (num > 0) {
+		int mod = num % b;
+		char c = (char) mod + '0';
+		if (mod == 10)
+			c = 'A';
+		if (mod == 11)
+			c = 'B';
+		if (mod == 12)
+			c = 'C';
+		if (mod == 13)
+			c = 'D';
+		if (mod == 14)
+			c = 'E';
+		if (mod == 15)
+			c = 'F';
+		if (mod == 16)
+			c = 'G';
+		if (mod == 17)
+			c = 'H';
+		if (mod == 18)
+			c = 'I';
+		if (mod == 19)
+			c = 'J';
+		if (mod == 20)
+			c = 'K';
+		conc = c + conc;
+		num /= b;
+	}
+	return conc;
+
+}
+bool isPalin(string s) {
+	int len = (int) s.length();
+	int i = 0;
+	int j = len - 1;
+	while (i <= j) {
+		if (s[i++] != s[j--])
+			return false;
+	}
+	return true;
+}
+
+int main() {
+	//for testing
+//	freopen("input/dualpal.in", "r", stdin);
+	//for submitting
+	freopen("dualpal.in", "r", stdin);
+	freopen("dualpal.out", "w", stdout);
+
+	int N;
+	int strt;
+	cin >> N >> strt;
+	strt = strt + 1;
+	while (N > 0) {
+		int isPal=0;
+		for (int i = 2; i <= 10; i++) {
+			string aString = convertToBaseB(strt, i);
+			if (isPalin(aString)) {
+				isPal++;
+			}
+			if(isPal ==2){
+				N--;
+				cout<<strt<<endl;
+				break;
+			}
+		}
+		strt++;
+	}
+	return 0;
+}
+

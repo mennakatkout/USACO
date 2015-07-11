@@ -1,0 +1,53 @@
+
+/*
+ ID: menna.k2
+ PROG: namenum
+ LANG: C++
+ */
+
+#include<iostream>
+#include<string>
+#include<fstream>
+#include<map>
+#include<vector>
+using namespace std;
+
+map<string,vector<string> > dict;
+char getNum(char c){
+	if( c =='A' || c == 'B' || c=='C') return '2';
+	if( c =='D' || c == 'E' || c=='F') return '3';
+	if( c =='G' || c == 'H' || c=='I') return '4';
+	if( c =='J' || c == 'K' || c=='L') return '5';
+	if( c =='M' || c == 'N' || c=='O') return '6';
+	if( c =='P' || c == 'R' || c=='S') return '7';
+	if( c =='T' || c == 'U' || c=='V') return '8';
+	return '9';
+}
+void processDict(){
+	string b;
+	ifstream fs("dict.txt");
+	while( fs>>b){
+		string num="";
+		for(int i = 0 ; i < (int)b.length() ;i++){
+			num += getNum(b[i]);
+		}
+		dict[num].push_back(b);
+	}
+}
+int main(){
+
+	//for testing
+//	freopen("input/namenum.in", "r", stdin);
+	//for submitting
+	freopen("namenum.in", "r", stdin);
+	freopen("namenum.out", "w", stdout);
+	processDict();
+	string N;
+	cin>>N;
+	for(int i = 0 ; i < (int)dict[N].size() ; i++)
+		cout<<dict[N][i]<<endl;;
+	if(dict[N].size() == 0)
+		cout<<"NONE"<<endl;
+
+	return 0;
+}
